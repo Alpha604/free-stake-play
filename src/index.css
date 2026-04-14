@@ -34,7 +34,7 @@
     --input: 220 14% 20%;
     --ring: 217 91% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 220 22% 8%;
     --sidebar-foreground: 215 15% 55%;
@@ -55,8 +55,107 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground font-sans;
     font-family: 'Inter', sans-serif;
+    background-image:
+      radial-gradient(circle at top, hsl(var(--primary) / 0.12), transparent 26%),
+      linear-gradient(180deg, hsl(var(--sidebar-background)), hsl(var(--background)) 18%);
+    min-height: 100vh;
+  }
+
+  button,
+  input,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .game-card-pulse {
+    @apply h-3 w-3 rounded-full bg-accent;
+    box-shadow: 0 0 0 0 hsl(var(--accent) / 0.55);
+    animation: game-pulse 1.8s infinite;
+  }
+
+  .mine-tile {
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 1px 0 hsl(var(--foreground) / 0.05), 0 12px 24px hsl(var(--background) / 0.22);
+  }
+
+  .mine-tile-shine {
+    position: absolute;
+    inset: -30%;
+    background: linear-gradient(135deg, transparent 35%, hsl(var(--foreground) / 0.08), transparent 60%);
+    transform: translateX(-60%) rotate(10deg);
+    transition: transform 0.45s ease;
+  }
+
+  .mine-tile:hover .mine-tile-shine {
+    transform: translateX(20%) rotate(10deg);
+  }
+
+  .mine-tile-revealed {
+    box-shadow: inset 0 0 0 1px hsl(var(--accent) / 0.08), 0 0 30px hsl(var(--accent) / 0.12);
+  }
+
+  .mine-tile-bomb {
+    box-shadow: inset 0 0 0 1px hsl(var(--destructive) / 0.08), 0 0 30px hsl(var(--destructive) / 0.1);
+  }
+
+  .gem-pop {
+    filter: drop-shadow(0 0 16px hsl(var(--accent) / 0.75));
+    animation: gem-pop 240ms ease-out;
+  }
+
+  .bomb-pop {
+    animation: bomb-pop 280ms ease-out;
+  }
+
+  .keno-ball {
+    @apply inline-flex items-center justify-center border border-primary/30 bg-primary text-primary-foreground;
+    box-shadow: 0 10px 25px hsl(var(--primary) / 0.25), inset 0 1px 0 hsl(var(--foreground) / 0.28);
+  }
+
+  .keno-hit {
+    box-shadow: 0 0 28px hsl(var(--primary) / 0.28);
+    animation: hit-pop 220ms ease-out;
+  }
+}
+
+@keyframes gem-pop {
+  0% { transform: scale(0.45) rotate(-14deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes bomb-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes hit-pop {
+  0% { transform: scale(0.82); }
+  100% { transform: scale(1); }
+}
+
+@keyframes game-pulse {
+  0% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0.55); }
+  70% { box-shadow: 0 0 0 10px hsl(var(--accent) / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-card-pulse,
+  .gem-pop,
+  .bomb-pop,
+  .keno-hit {
+    animation: none !important;
+  }
+
+  .mine-tile-shine {
+    transition: none !important;
   }
 }
