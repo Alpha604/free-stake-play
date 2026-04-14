@@ -1,16 +1,39 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Sidebar from "@/components/Sidebar";
+import Header from "@/components/Header";
+import MinesGame from "@/components/MinesGame";
+import WalletModal from "@/components/WalletModal";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const [balance, setBalance] = useState(0);
+  const [walletOpen, setWalletOpen] = useState(false);
+
+  const handleDeposit = (amount: number) => {
+    setBalance((b) => b + amount);
+  };
+
+  const handleWithdraw = (amount: number) => {
+    setBalance((b) => Math.max(0, b - amount));
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="h-screen flex flex-col overflow-hidden">
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar />
+        <div className="flex flex-col flex-1 overflow-hidden">
+          <Header balance={balance} onOpenWallet={() => setWalletOpen(true)} />
+          <MinesGame balance={balance} setBalance={setBalance} />
+        </div>
+      </div>
+      <WalletModal
+        open={walletOpen}
+        onClose={() => setWalletOpen(false)}
+        balance={balance}
+        onDeposit={handleDeposit}
+        onWithdraw={handleWithdraw}
+      />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
