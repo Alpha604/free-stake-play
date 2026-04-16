@@ -32,7 +32,7 @@ const games = [
   { id: "flip", name: "Flip", path: "/flip", image: flipCard, available: false, players: 303 },
   { id: "pump", name: "Pump", path: "/pump", image: pumpCard, available: false, players: 269 },
   { id: "snakes", name: "Snakes", path: "/snakes", image: snakesCard, available: false, players: 263 },
-  { id: "roulette", name: "Roulette", path: "/roulette", image: rouletteCard, available: false, players: 160 },
+  { id: "roulette", name: "Roulette", path: "/roulette", image: rouletteCard, available: true, players: 160 },
 ];
 
 const HomePage = () => {
