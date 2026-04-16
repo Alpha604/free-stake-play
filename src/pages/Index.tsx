@@ -8,6 +8,7 @@ import StatsPage from "@/components/StatsPage";
 import WalletModal from "@/components/WalletModal";
 import AccountModal from "@/components/AccountModal";
 import HomePage from "@/components/HomePage";
+import RouletteGame from "@/components/RouletteGame";
 
 interface GameResult {
   game: "Mines" | "Keno";
@@ -97,6 +98,7 @@ const Index = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/mines" element={<MinesGame balance={balance} setBalance={wrappedSetBalance} onGameResult={handleGameResult} />} />
             <Route path="/keno" element={<KenoGame balance={balance} setBalance={wrappedSetBalance} onGameResult={handleGameResult} />} />
+            <Route path="/roulette" element={<RouletteGame balance={balance} setBalance={wrappedSetBalance} onGameResult={handleGameResult} />} />
             <Route path="/stats" element={<StatsPage balance={balance} stats={stats} />} />
           </Routes>
         </div>
